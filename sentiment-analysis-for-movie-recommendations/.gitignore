@@ -47,6 +47,5 @@ data/
 documents/
 notebooks/
 .ipynb_checkpoints/
-Dockerfile
 movies.json
 venv/
