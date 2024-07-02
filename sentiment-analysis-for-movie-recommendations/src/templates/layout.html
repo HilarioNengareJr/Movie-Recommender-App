@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{%block title%} {{title}} {%endblock%}</title>
+
+    <!-- favicon -->
+    <link
+      rel="shortcut icon"
+      href="{{url_for('static', filename='images/logo.png')}}"
+      type="image/PNG"
+    />
+
+    <!-- google fonts -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Inter:100,200,300,regular,500,600,700,800,900"
+      rel="stylesheet"
+    />
+
+    <!-- CSS links -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/layout.css')}}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='css/mediaQueries.css')}}"
+    />
+  </head>
+
+  <body id="top">
+    <div class="container">
+      <!-- HEADER -->
+      <header>
+        <div class="navbar">
+          <a href="#" class="navbar-brand">
+            <span>Review Movies</span>
+            <span class="indicator"></span>
+          </a>
+          <div class="navbar-actions">
+            <form
+              action="{{url_for('index')}}"
+              method="GET"
+              class="navbar-form"
+            >
+              <input
+                type="text"
+                name="search"
+                placeholder="I'm looking for..."
+                class="navbar-form-search"
+              />
+              <button class="btn">Look</button>
+            </form>
+          </div>
+        </div>
+      </header>
+      <main>
+
+        {% with messages = get_flashed_messages() %} {% if messages %}
+        <ul class="flash-messages" data-flash>
+          {% for message in messages %}
+          <li class="flash-message">{{ message }}</li>
+          <span data-close-flash><ion-icon name="close"></ion-icon></span>
+          {% endfor %}
+        </ul>
+        {% endif %} {% endwith %}
+
+        <article>{% block content %} {% endblock %}</article>
+      </main>
+      <footer></footer>
+
+      <!-- 
+    - #BACK TO TOP
+  -->
+
+      <a
+        href="#top"
+        class="back-top-btn has-after active"
+        aria-label="back to top"
+        data-back-top
+      >
+        <ion-icon name="arrow-up" aria-hidden="true"></ion-icon>
+      </a>
+    </div>
+    <!--
+- custom js link
+-->
+    <script src="../static/js/script.js" defer></script>
+
+    <!--
+- ionicon link
+-->
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+    ></script>
+  </body>
+</html>

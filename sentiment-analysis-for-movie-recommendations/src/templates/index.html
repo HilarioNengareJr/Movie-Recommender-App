@@ -1,0 +1,66 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<section class="movies">
+  <form method="GET" action="{{ url_for('index') }}" data-filter-bar>
+    <div class="filter-bar">
+      <div class="filter-dropdowns">
+        <select name="genre" class="genre">
+          <option value="all">All genres</option>
+          <option value="action">Action</option>
+          <option value="adventure">Adventure</option>
+          <option value="animation">Animation</option>
+          <option value="biography">Biography</option>
+        </select>
+      </div>
+      <div class="filter-btn">
+        <button class="btn">Filter</button>
+      </div>
+    </div>
+  </form>
+  <div class="movies-grid" data-movies-grid>
+    {% for movie in movies %}
+    <div class="movie-card" data-movie-card>
+      <div class="card-head">
+        <img src="{{ movie['Poster'] }}" alt="" class="card-img" />
+        <div class="card-overlay">
+          <div class="bookmark">
+            <ion-icon name="bookmark-outline"></ion-icon>
+          </div>
+          <div class="rating">
+            <ion-icon name="star-outline"></ion-icon>
+            <span>{{ movie['imdbRating'] }}</span>
+          </div>
+          <div class="review">
+            <ion-icon name="pencil-outline"></ion-icon>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">{{ movie['Title'] }}</h3>
+        <div class="card-info">
+          <span class="genre">{{ movie['Genre'] }}</span>
+          <span class="year">{{ movie['Year'] }}</span>
+        </div>
+      </div>
+      <!-- Review form -->
+      <div class="movie-review-card" data-movie-review-card>
+        <span data-close><ion-icon name="close"></ion-icon></span>
+        <div class="top">
+          <h3>{{ movie['Title'] }}</h3>
+        </div>
+        <form method="post" action="{{ url_for('index') }}" data-review-form>
+          {{ form.hidden_tag() }}
+          <input type="hidden" name="movie_id" value="{{ movie['imdbID'] }}">
+          {{ form.review(id="enter-review") }}
+          {% if form.review.errors %}
+          <p class="error">{{ form.review.errors[0] }}</p>
+          {% endif %}
+          {{ form.submit(class="btn") }}
+        </form>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

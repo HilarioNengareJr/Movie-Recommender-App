@@ -1,0 +1,51 @@
+{% extends 'layout.html' %} {%block content%}
+<!--MOVIES-->
+<section class="movies" style="display: flex; flex-direction: column;">
+  <span class="section-title">Top Recommendations</span>
+
+  <div class="movies-grid" data-movies-grid>
+    
+    <!-- Movies grid -->
+    {% for movie in movies %}
+    <div class="movie-card" data-movie-card>
+      <div class="card-head">
+        <img src="{{ movie['Poster'] }}" alt="" class="card-img" />
+        <div class="card-overlay">
+          <div class="bookmark">
+            <ion-icon name="bookmark-outline"></ion-icon>
+          </div>
+
+          <div class="rating">
+            <ion-icon name="star-outline"></ion-icon>
+            <span>{{ movie['imdbRating'] }}</span>
+          </div>
+
+          <div class="review">
+            <ion-icon name="eye-outline"></ion-icon>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <h3 class="card-title">{{ movie['Title'] }}</h3>
+        <div class="card-info">
+          <span class="genre">{{ movie['Genre'] }}</span>
+          <span class="year">{{ movie['Year'] }}</span>
+          <span>{{ movie['imdbRating'] }}</span>
+        </div>
+      </div>
+
+      <div class="movie-review-card" style="inline-size: 500px;" data-movie-review-card>
+        <span data-close> <ion-icon name="close"></ion-icon> </span>
+        <div class="top">
+          <h3>{{ movie['Title'] }}</h3>
+        </div>
+        <P>
+          {{movie['Plot']}}
+        </P>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
