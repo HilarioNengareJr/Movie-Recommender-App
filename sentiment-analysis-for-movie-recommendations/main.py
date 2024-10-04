@@ -26,11 +26,16 @@ import os
 # Get the directory of the current script
 script_dir = os.path.dirname(os.path.abspath(__file__))
 model_path = os.path.join(script_dir, 'models', 'pipeline.pkl')
-with open(model_path, 'rb') as model_svm:
-    pipeline = pickle.load(model_svm)
-    print("Model loaded successfully")
+if 'pipeline' not in globals():
+    with open(model_path, 'rb') as model_svm:
+        pipeline = pickle.load(model_svm)
+        print("Model loaded successfully")
 
 # Load movie data from API
+import requests_cache
+
+requests_cache.install_cache('omdb_cache', expire_after=3600)  # Cache API responses for 1 hour
+
 def load_movies(query):
     page_number = 3
     results = []
@@ -92,9 +97,10 @@ class ContentBasedFilter:
             self.imdb_ids.append(movie["imdbID"])
 
     def _calculate_similarity(self):
-        X = self.vectorizer.fit_transform(self.features)
-        self.similarities = cosine_similarity(X, X)
-        print(f"Similarity matrix shape: {self.similarities.shape}")
+        if not hasattr(self, 'similarities'):
+            X = self.vectorizer.fit_transform(self.features)
+            self.similarities = cosine_similarity(X, X)
+            print(f"Similarity matrix shape: {self.similarities.shape}")
 
     def recommend_similar_movies(self, imdb_id):
         movie_index = self.imdb_ids.index(imdb_id)
