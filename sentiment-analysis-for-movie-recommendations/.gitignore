@@ -42,10 +42,80 @@ Thumbs.db
 *.wmv
 
 
-flask_session/
+.flask_session/
 data/
 documents/
 notebooks/
 .ipynb_checkpoints/
 movies.json
 venv/
+venv/                                                                                                                          
+ =======                                                                                                                        
+ # Aider                                                                                                                        
+ .aider.chat                                                                                                                    
+ .aider.exclusions                                                                                                              
+ .aider.identifiers                                                                                                             
+ .aider.log                                                                                                                     
+ .aider.output                                                                                                                  
+ .aider.session                                                                                                                 
+ .aider.tmp                                                                                                                     
+ .aider.cache                                                                                                                   
+ .aider.history                                                                                                                 
+ .aider.lock                                                                                                                    
+ .aider.pid                                                                                                                     
+ .aider.state                                                                                                                   
+ .aider.tmp/                                                                                                                    
+ .aider.cache/                                                                                                                  
+ .aider.history/                                                                                                                
+ .aider.lock/                                                                                                                   
+ .aider.pid/                                                                                                                    
+ .aider.state/                                                                                                                  
+ .aider.tmp/*                                                                                                                   
+ .aider.cache/*                                                                                                                 
+ .aider.history/*                                                                                                               
+ .aider.lock/*                                                                                                                  
+ .aider.pid/*                                                                                                                   
+ .aider.state/*                                                                                                                 
+ .aider.tmp/**                                                                                                                  
+ .aider.cache/**                                                                                                                
+ .aider.history/**                                                                                                              
+ .aider.lock/**                                                                                                                 
+ .aider.pid/**                                                                                                                  
+ .aider.state/**                                                                                                                
+ .aider.tmp/**/*                                                                                                                
+ .aider.cache/**/*                                                                                                              
+ .aider.history/**/*                                                                                                            
+ .aider.lock/**/*                                                                                                               
+ .aider.pid/**/*                                                                                                                
+ .aider.state/**/*                                                                                                              
+ .aider.tmp/**/**                                                                                                               
+ .aider.cache/**/**                                                                                                             
+ .aider.history/**/**                                                                                                           
+ .aider.lock/**/**                                                                                                              
+ .aider.pid/**/**                                                                                                               
+ .aider.state/**/**                                                                                                             
+ .aider.tmp/**/**/*                                                                                                             
+ .aider.cache/**/**/*                                                                                                           
+ .aider.history/**/**/*                                                                                                         
+ .aider.lock/**/**/*                                                                                                            
+ .aider.pid/**/**/*                                                                                                             
+ .aider.state/**/**/*                                                                                                           
+ .aider.tmp/**/**/**                                                                                                            
+ .aider.cache/**/**/**                                                                                                          
+ .aider.history/**/**/**                                                                                                        
+ .aider.lock/**/**/**                                                                                                           
+ .aider.pid/**/**/**                                                                                                            
+ .aider.state/**/**/**                                                                                                          
+ .aider.tmp/**/**/**/*                                                                                                          
+ .aider.cache/**/**/**/*                                                                                                        
+ .aider.history/**/**/**/*                                                                                                      
+ .aider.lock/**/**/**/*                                                                                                         
+ .aider.pid/**/**/**/*                                                                                                          
+ .aider.state/**/**/**/*                                                                                                        
+ .aider.tmp/**/**/**/**                                                                                                         
+ .aider.cache/**/**/**/**                                                                                                       
+ .aider.history/**/**/**/**                                                                                                     
+ .aider.lock/**/**/**/**    
+ .aider.chat.history.md
+ .aider.input.history
+ .aider.tags.cache.v3
