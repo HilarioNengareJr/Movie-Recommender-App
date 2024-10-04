@@ -1,1 +1,2 @@
 web: gunicorn sentiment-analysis-for-movie-recommendations.wsgi:app
+web: gunicorn wsgi:app --log-file -
