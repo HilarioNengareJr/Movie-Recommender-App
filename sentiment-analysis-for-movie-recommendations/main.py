@@ -106,6 +106,7 @@ class ContentBasedFilter:
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
+    print("Accessed index route")
     movies = []
     form = ReviewForm()
     title = 'Review and Recommend'
