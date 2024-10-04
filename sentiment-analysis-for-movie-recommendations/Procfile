@@ -1,1 +1,1 @@
-web: gunicorn wsgi:app
+web: gunicorn sentiment-analysis-for-movie-recommendations.wsgi:app
