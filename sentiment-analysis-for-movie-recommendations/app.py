@@ -161,3 +161,58 @@ def recommended_movies_page():
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5009)
 
+from flask import Flask, request, jsonify
+import numpy as np
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+import pickle
+
+app = Flask(__name__)
+
+# Load the pre-trained model and TF-IDF vectorizer
+with open('models/model_svm.pkl', 'rb') as model_file:
+    model = pickle.load(model_file)
+
+with open('models/pipeline.pkl', 'rb') as pipeline_file:
+    pipeline = pickle.load(pipeline_file)
+
+# Initialize the TF-IDF vectorizer and compute the TF-IDF matrix
+tfidf_vectorizer = TfidfVectorizer(stop_words='english')
+tfidf_matrix = tfidf_vectorizer.fit_transform(pipeline['tfidf_matrix'])
+
+# Compute the cosine similarities
+similarities = cosine_similarity(tfidf_matrix, tfidf_matrix)
+
+def preprocess_data():
+    global tfidf_matrix, similarities
+    tfidf_matrix = tfidf_vectorizer.fit_transform(pipeline['tfidf_matrix'])
+    similarities = cosine_similarity(tfidf_matrix, tfidf_matrix)
+
+@app.route('/recommend', methods=['POST'])
+def recommend_similar_movies():
+    data = request.get_json()
+    movie_id = data.get('movie_id')
+    review = data.get('review')
+
+    if similarities is None:
+        preprocess_data()
+
+    # Get the index of the movie
+    movie_index = pipeline['movie_id_to_index'][movie_id]
+
+    # Get the cosine similarity scores for the movie
+    similarity_scores = list(enumerate(similarities[movie_index]))
+
+    # Sort the movies based on the similarity scores
+    similarity_scores = sorted(similarity_scores, key=lambda x: x[1], reverse=True)
+
+    # Get the top 5 similar movies (excluding the movie itself)
+    top_similar_movies = similarity_scores[1:6]
+
+    # Get the movie IDs of the top similar movies
+    recommended_movie_ids = [pipeline['index_to_movie_id'][i[0]] for i in top_similar_movies]
+
+    return jsonify(recommended_movie_ids)
+
+if __name__ == "__main__":
+    app.run(debug=True)
