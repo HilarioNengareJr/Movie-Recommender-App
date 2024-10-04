@@ -23,6 +23,7 @@ Session(app)
 # Load the SVM model
 with open('./models/pipeline.pkl', 'rb') as model_svm:
     pipeline = pickle.load(model_svm)
+    print("Model loaded successfully")
 
 # Load movie data from API
 def load_movies(query):
@@ -33,6 +34,7 @@ def load_movies(query):
     for page in range(1, page_number + 1):
         url = f"http://www.omdbapi.com/?apikey=e308b9e6&s={query}&page={page}"
         response = requests.get(url)
+        print(f"OMDB API Response for page {page}: {response.json()}")
         data = response.json()
         if 'Search' in data:
             results.extend(data['Search'])
@@ -43,6 +45,7 @@ def load_movies(query):
     for movie in results:
         plot_url = f"http://www.omdbapi.com/?apikey=e308b9e6&i={movie['imdbID']}&plot=full"
         plot_response = requests.get(plot_url)
+        print(f"OMDB API Plot Response for {movie['Title']}: {plot_response.json()}")
         plot_data = plot_response.json()
         if 'Plot' in plot_data:
             all_results.append(plot_data)
@@ -79,12 +82,14 @@ class ContentBasedFilter:
     def _extract_features(self):
         for movie in self.movies:
             feature = movie["Genre"] + " " + movie["Plot"] + " " + movie["Director"] + " " + movie["Actors"]
+            print(f"Extracted feature for {movie['Title']}: {feature}")
             self.features.append(feature)
             self.imdb_ids.append(movie["imdbID"])
 
     def _calculate_similarity(self):
         X = self.vectorizer.fit_transform(self.features)
         self.similarities = cosine_similarity(X, X)
+        print(f"Similarity matrix shape: {self.similarities.shape}")
 
     def recommend_similar_movies(self, imdb_id):
         movie_index = self.imdb_ids.index(imdb_id)
@@ -108,6 +113,7 @@ def index():
     if request.method == 'POST' and form.validate_on_submit():
         movie_id = request.form['movie_id']
         review = form.review.data
+        print(f"Form submitted: Movie ID: {movie_id}, Review: {review}")
         prediction = pipeline.predict([review])
         if prediction == ['pos']:
             cbf = ContentBasedFilter(load_movies('all'))
@@ -115,7 +121,7 @@ def index():
             session['recommended_movies'] = recommended_movies
             flash('Thanks for the positive review, here are your movie recommendations!', 'info')
             return redirect(url_for('recommended_movies_page'))
-        
+    
         else:
             flash('Sorry to hear about that, you can keep on reviewing.', 'danger')
             return redirect(url_for('index'))
@@ -134,6 +140,7 @@ def index():
 
 @app.route('/recommended', methods=['POST','GET'])
 def recommended_movies_page():
+    print("Accessed recommended_movies_page route")
     recommended_movies = session.get('recommended_movies')
     title = 'Recommended Movies'
     return render_template('recommended.html', movies=recommended_movies, title=title)
