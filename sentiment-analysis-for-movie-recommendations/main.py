@@ -158,33 +158,6 @@ def recommended_movies_page():
     return render_template('recommended.html', movies=recommended_movies, title=title)
  
 
-def test_model(test_reviews):
-    predictions = pipeline.predict(test_reviews)
-    return predictions
-
 if __name__ == '__main__':
-    # Load test data
-    with open('test_reviews.json', 'r') as f:
-        test_data = json.load(f)
-    
-    test_reviews = [review['text'] for review in test_data]
-    true_labels = [review['label'] for review in test_data]
-    
-    # Get predictions
-    predictions = test_model(test_reviews)
-    
-    # Evaluate model
-    from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
-    
-    accuracy = accuracy_score(true_labels, predictions)
-    precision = precision_score(true_labels, predictions, average='weighted')
-    recall = recall_score(true_labels, predictions, average='weighted')
-    f1 = f1_score(true_labels, predictions, average='weighted')
-    
-    print(f"Accuracy: {accuracy}")
-    print(f"Precision: {precision}")
-    print(f"Recall: {recall}")
-    print(f"F1 Score: {f1}")
-    
     app.run(debug=True, host='0.0.0.0', port=5009)
 
