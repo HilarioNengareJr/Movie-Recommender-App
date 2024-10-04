@@ -23,8 +23,9 @@ Session(app)
 # Load the SVM model
 import os
 
-# Assuming the current working directory is the root of the project
-model_path = os.path.join(os.getcwd(), 'models', 'pipeline.pkl')
+# Get the directory of the current script
+script_dir = os.path.dirname(os.path.abspath(__file__))
+model_path = os.path.join(script_dir, 'models', 'pipeline.pkl')
 with open(model_path, 'rb') as model_svm:
     pipeline = pickle.load(model_svm)
     print("Model loaded successfully")
