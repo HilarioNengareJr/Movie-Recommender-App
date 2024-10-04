@@ -21,7 +21,11 @@ app.config['SESSION_TYPE'] = 'filesystem'
 Session(app)
 
 # Load the SVM model
-with open('./models/pipeline.pkl', 'rb') as model_svm:
+import os
+
+# Assuming the current working directory is the root of the project
+model_path = os.path.join(os.getcwd(), 'models', 'pipeline.pkl')
+with open(model_path, 'rb') as model_svm:
     pipeline = pickle.load(model_svm)
     print("Model loaded successfully")
 
